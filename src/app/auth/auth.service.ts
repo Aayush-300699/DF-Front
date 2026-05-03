@@ -19,13 +19,16 @@ export class AuthService {
       .pipe(tap((response) => this.authStorage.storeSession(response)));
   }
 
-  refresh(refreshToken: string): Observable<{ access_token: string }> {
+  refresh(refreshToken: string): Observable<{ access_token: string; refresh_token: string }> {
     return this.http
-      .post<{ access_token: string }>(`${authApiConfig.baseUrl}/auth/refresh`, {
-        refresh_token: refreshToken,
-      })
+      .post<{ access_token: string; refresh_token: string }>(
+        `${authApiConfig.baseUrl}/auth/refresh`,
+        { refresh_token: refreshToken }
+      )
       .pipe(
-        tap((res) => this.authStorage.updateAccessToken(res.access_token))
+        tap((res) =>
+          this.authStorage.updateTokens(res.access_token, res.refresh_token)
+        )
       );
   }
 

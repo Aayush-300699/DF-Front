@@ -95,10 +95,10 @@ export class BookingComponent implements OnInit {
       return;
     }
 
-    // No ?clinic= — single-clinic MVP: resolve via GET /v1/clinic (public or tenant default)
+    // No ?clinic= — resolve default clinic via GET /v1/clinic/public (anonymous-safe)
     this.servicesLoading = true;
     this.metaError = '';
-    this.clinicsService.get().subscribe({
+    this.clinicsService.getPublicBookingClinic().subscribe({
       next: (r) => {
         const id = r.clinic?.id?.trim();
         if (!id) {

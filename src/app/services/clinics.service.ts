@@ -14,7 +14,24 @@ export class ClinicsService {
     return this.http.get<{ clinic: Clinic }>(this.base);
   }
 
+  /** Public — no auth. Used by /booking when ?clinic= is omitted. */
+  getPublicBookingClinic(): Observable<{ clinic: Clinic }> {
+    return this.http.get<{ clinic: Clinic }>(`${this.base}/public`);
+  }
+
   update(payload: Partial<Clinic>): Observable<{ clinic: Clinic }> {
     return this.http.put<{ clinic: Clinic }>(this.base, payload);
+  }
+
+  create(payload: Partial<Clinic>): Observable<{ clinic: Clinic }> {
+    return this.http.post<{ clinic: Clinic }>(this.base, payload);
+  }
+
+  list(): Observable<{ clinics: Clinic[] }> {
+    return this.http.get<{ clinics: Clinic[] }>(`${authApiConfig.baseUrl}/clinics`);
+  }
+
+  toggle(id: string, is_active: boolean): Observable<any> {
+    return this.update({ is_active });
   }
 }

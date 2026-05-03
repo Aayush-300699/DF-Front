@@ -34,6 +34,12 @@ export class AuthStorageService {
     sessionStorage.setItem(this.accessTokenKey, token);
   }
 
+  /** Persist both tokens after refresh — backend rotates refresh_token on each /auth/refresh. */
+  updateTokens(accessToken: string, refreshToken: string): void {
+    sessionStorage.setItem(this.accessTokenKey, accessToken);
+    sessionStorage.setItem(this.refreshTokenKey, refreshToken);
+  }
+
   clearSession(): void {
     sessionStorage.removeItem(this.accessTokenKey);
     sessionStorage.removeItem(this.refreshTokenKey);

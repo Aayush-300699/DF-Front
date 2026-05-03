@@ -90,7 +90,7 @@ export class ClinicFormDialog {
     this.saving = true;
     const payload = this.form.value as Partial<Clinic>;
     const req = this.data?.id
-      ? this.svc.update(this.data.id, payload)
+      ? this.svc.update(payload)
       : this.svc.create(payload);
     req.subscribe({
       next: (r) => { this.saving = false; this.dialogRef.close(r.clinic); },
