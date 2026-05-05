@@ -94,6 +94,7 @@ export class BookingComponent implements OnInit {
       this.loadServicesAndChairs(q);
       return;
     }
+    
 
     // No ?clinic= — resolve default clinic via GET /v1/clinic/public (anonymous-safe)
     this.servicesLoading = true;
